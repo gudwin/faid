@@ -20,7 +20,7 @@ namespace Faid\Debug {
 		 */
 		public static function setDefaults() {
 			// Write default config
-			Configure::write('Debug', true);
+			Configure::write('Debug', false);
 			Configure::write('Error.Handler', array('\Faid\Debug\Debug', 'errorHandler'));
 			Configure::write('Error.Level', E_ALL | E_WARNING | E_STRICT);
 			Configure::write('Exception.Handler', array('\Faid\Debug\Debug', 'exceptionHandler'));
@@ -47,21 +47,12 @@ namespace Faid\Debug {
 		}
 
 		/**
-		 * @desc Высылает письмо об ошибке на ADMIN_EMAIL
+		 * @desc
 		 * @return
 		 */
 		public static function errorHandler($errno, $errstr, $errfile = '', $errline = '') {
-
 			$className = Configure::read('Error.Renderer');
 			call_user_func(array($className, 'render'), $errno, $errstr, $errfile, $errline);
-			$debugDisabled = false == Configure::read('Debug');
-			if ( $debugDisabled ) {
-				$trace = defaultDebugBackTrace(false);
-				// than we on production server, send an email to administrator
-				$template = ' Error type: %s;  %s [%s:%s]' . "\r\n";
-				$message  = sprintf($template, $errno, $errstr, $errfile, $errline);
-				$trace    = defaultErrorSend($message, $trace);
-			}
 		}
 
 		/**
@@ -136,7 +127,7 @@ namespace Faid\Debug {
 		public static function fatalErrorShutDown() {
 			$a = error_get_last();
 			if ( !is_null($a) ) {
-				$isFatalError = ($a['type'] === E_ERROR || $a['type'] === E_USER_ERROR);
+				$isFatalError = $a['type'] === E_ERROR || $a['type'] === E_USER_ERROR || $a['type'] == E_COMPILE_ERROR;
 				if ( $isFatalError ) {
 
 					$callback = Configure::read('FatalError.Handler');
@@ -165,7 +156,6 @@ namespace Faid\Debug {
 			// enable exception handler
 			set_exception_handler($exceptionHandler);
 		}
-
 		protected static function setEventListeners() {
 			Configure::addEventListener('Configure.write', array('\Faid\Debug\Debug', 'onConfigureWrite'));
 		}
@@ -213,7 +203,8 @@ namespace Faid\Debug {
 
 	function _debugWithOutput() {
 		displayCallerCode(1);
-		call_user_func_array('_debug', func_get_args());
+		var_dump2( func_get_args());
+		die();
 	}
 
 	/**
@@ -257,28 +248,7 @@ namespace Faid\Debug {
 	}
 
 
-	function defaultErrorSend($errstr, $trace = '') {
-		$date   = date('Y-m-D H:i');
-		$server = print_r($_SERVER, true);
 
-		$szPost    = print_r($_POST, true);
-		$szGet     = print_r($_GET, true);
-		$szMessage = <<<EOD
-		Hi!
-	There is an error
-	Trace : {$trace}
-	Date : [{$date}]
-	Post : [{$szPost}]
-	GET : [{$szGet}]
-	Error message : $errstr;
-
-	--
-	Best regards, FAID
-EOD;
-		$result    = mail(ADMIN_EMAIL, '[Error report] :' . SITE_NAME, $szMessage);
-
-		return $result;
-	}
 
 	function defaultDebugBackTrace($output = true, $trace = NULL) {
 		// А это значит, что режим отладки врублен!

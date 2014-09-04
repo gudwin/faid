@@ -1,5 +1,5 @@
 <?php
-namespace Faid\Tests;
+namespace Faid\tests\Dispatcher;
 
 /**
  * Created by JetBrains PhpStorm.

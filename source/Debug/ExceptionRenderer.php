@@ -1,17 +1,19 @@
 <?php
 namespace Faid\Debug {
-	/**
-	 * User: Gisma
-	 * Date: 12.03.13
-	 * Time: 7:58
-	 * To change this template use File | Settings | File Templates.
-	 */
 
-	class ExceptionRenderer {
+	class ExceptionRenderer extends baseRenderer {
 		/**
 		 * @param $exception
 		 */
 		public static function render( \Exception $exception ) {
+			$skip = !self::isDebugEnabled();
+
+			if ( $skip ) {
+				return;
+			}
+
+			self::cleanOutputIfNecessary();
+
 			print nl2br($exception);
 			print Debug::getFileSource( $exception->getFile(), $exception->getLine() );
 		}
