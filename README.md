@@ -1,10 +1,11 @@
-[#]faid
+#faid
 ====
 
-[##] Next tasks
-[] introduce \Faid\simpleCache
-[] introduce \Faid\CacheEngine\Memcache
-[] introduce \Faid\CacheEngine\FileCache
+## Next tasks
+
+- [] introduce \Faid\simpleCache
+- [] introduce \Faid\CacheEngine\Memcache
+- [] introduce \Faid\CacheEngine\FileCache
 
 ##[0.5.0]
 Request & Response objects introduced
