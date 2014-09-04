@@ -1,5 +1,6 @@
 <?php
 namespace Faid\Dispatcher {
+	use Faid\Request\Request;
 	use \Faid\StaticObservable;
 	use \Faid\Request\HttpRequest;
 
@@ -17,10 +18,12 @@ namespace Faid\Dispatcher {
 		/**
 		 * @param HttpRequest $request
 		 */
-		public function __construct(HttpRequest $request) {
+		public function __construct(Request $request) {
 			$this->request = $request;
 		}
-
+		public function getRequest( ) {
+			return $this->request;
+		}
 		/**
 		 * @param Route $route
 		 */

@@ -32,6 +32,9 @@ namespace Faid\Request {
 			}
 			return $this->data[ $key ];
 		}
+		public function url( ) {
+
+		}
 
 		public function addValidator($fieldName, $validationMethod) {
 

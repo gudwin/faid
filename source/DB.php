@@ -130,6 +130,9 @@ namespace Faid {
 		 */
 		static public function escape( $value )
 		{
+			if ( is_array( $value )) {
+				throw new \InvalidArgumentException('Can`t be an array');
+			}
 			self::checkConnection();
 			return self::$connection->real_escape_string( $value );
 		}

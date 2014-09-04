@@ -97,7 +97,7 @@ namespace Faid {
 			$sql       = 'select count(*) as `count` from %s where %s';
 			$sql       = sprintf($sql, DB::$connection->real_escape_string($table), $condition);
 
-			return DB::getField($sql, 'count');
+			return intval( DB::getField($sql, 'count') );
 		}
 
 		private static function getCondition($condition, $glue = ' and ', $updateCondition = false) {

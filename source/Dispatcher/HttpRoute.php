@@ -9,35 +9,23 @@ namespace Faid\Dispatcher {
 		protected $urlTemplate = '';
 
 		/**
+		 * @param $urlTemplate
+		 */
+		public function __construct( $config = array() ) {
+
+			if ( empty($config['url']) ) {
+				throw new RouteException('Route url template not specified');
+			}
+			$this->urlTemplate = $config['url'];
+
+			//
+			parent::__construct( $config );
+		}
+		/**
 		 * @return string
 		 */
 		public function getUrlTemplate() {
 			return $this->urlTemplate;
-		}
-
-		/**
-		 * @param $urlTemplate
-		 * @param $options
-		 *
-		 * @return HttpRoute
-		 * @throws RouteException
-		 */
-		public static function create($urlTemplate, $options) {
-			if ( empty($urlTemplate) ) {
-				throw new RouteException('Route url template not specified');
-			}
-
-			$result = new HttpRoute(array());
-
-			$result->urlTemplate = $urlTemplate;
-			foreach ($options as $key => $value) {
-				$key = strtolower($key);
-				if ( isset($result->$key) ) {
-					$result->$key = $value;
-				}
-			}
-
-			return $result;
 		}
 
 		/**
@@ -53,7 +41,7 @@ namespace Faid\Dispatcher {
 			//
 			$regExp = $this->getRegexp();
 			//
-			$this->ready = preg_match($regExp, $request->url());
+			$this->ready = @preg_match($regExp, $request->url());
 
 			//
 			return $this->ready;
@@ -77,7 +65,7 @@ namespace Faid\Dispatcher {
 		public function dispatch() {
 			parent::dispatch();
 			//
-			$callback = $this->getCallback();
+			$callback = $this->getRouteCallback();
 			call_user_func($callback);
 			//
 			$isController = is_array( $callback ) && is_object( $callback[0]) && ( $callback[0] instanceof \Faid\Controller\Controller );
@@ -87,37 +75,18 @@ namespace Faid\Dispatcher {
 				$controller->afterAction( );
 			}
 		}
-		protected function getCallback( ) {
-			//
-			if ( !empty($this->controller) ) {
-				if ( !is_object($this->controller) ) {
-					$this->controller = new $this->controller();
-				}
-				if ( $this->controller instanceof \Faid\Controller\Controller ) {
-					$this->controller->beforeAction($this->request);
-				}
-				$callback = array($this->controller, $this->action);
-			} else {
-				$callback = $this->action;
-			}
-			//
-			if ( !is_callable($callback) ) {
-				throw new RouteException('Route failed to dispatch. Callback not callable');
-			}
-			return $callback;
 
-		}
 		/**
 		 *
 		 */
 		public function prepareRequest() {
 			$regExp = $this->getRegExp();
 			preg_match($regExp, $this->request->url(), $matches);
-			$params = array();
 			//
 			$unnamedParamIndex = 1;
 
 			if ( preg_match_all("/(\*)|:([\w-]+)/", $this->urlTemplate, $argument_keys) ) {
+				$params = array();
 				// grab array with matches
 				$argument_keys = $argument_keys[ 0 ];
 
@@ -145,8 +114,9 @@ namespace Faid\Dispatcher {
 
 					}
 				}
+				$this->request->set($params);
 			}
-			$this->request->set($params);
+
 		}
 	}
 }

@@ -42,7 +42,6 @@ namespace Faid {
 		}
 
 		public function __isset($name) {
-			$name = strtolower( $name );
 			return isset($this->columns[ $name ]);
 		}
 
@@ -61,7 +60,6 @@ namespace Faid {
 		 * Возвращает атрибут в виде объекта
 		 */
 		public function attr($columnName) {
-			$columnName = strtolower( $columnName );
 			if ( !isset($this->columns[ $columnName ]) ) {
 				// Иначе бросаем исключение
 				$szText = ('In document ("%s","%s") attribute `%s` not found');
@@ -120,7 +118,6 @@ namespace Faid {
 		 */
 		public function setData(array $newData) {
 			foreach ($newData as $key => $row) {
-				$key = strtolower( $key );
 				$this->columns[ $key ] = $row;
 			}
 		}

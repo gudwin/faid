@@ -2,7 +2,7 @@
 namespace Faid\Request {
 	class HttpRequest extends Request {
 		protected $uri = false;
-
+		protected $domainName = '';
 		/**
 		 * @param array $data
 		 */
@@ -14,6 +14,7 @@ namespace Faid\Request {
 			parent::__construct( $data ) ;
 			//
 			$this->detectURI();
+			$this->detectDomain();
 		}
 
 		/**
@@ -36,7 +37,14 @@ namespace Faid\Request {
 		public function getMethod( ) {
 			return $_SERVER['REQUEST_METHOD'];
 		}
+		public function domain( $domainName = null ) {
+			if ( !empty( $domainName )) {
+				$this->domainName =$domainName;
+			} else {
+				return $this->domainName;
+			}
 
+		}
 		/**
 		 * @param bool $uri
 		 *
@@ -68,6 +76,11 @@ namespace Faid\Request {
 				$uri = '/';
 			}
 			$this->uri = $uri;
+		}
+		protected function detectDomain( ) {
+			if ( !empty( $_SERVER['HTTP_HOST'])) {
+				$this->domainName = $_SERVER['HTTP_HOST'];
+			}
 		}
 	}
 }
