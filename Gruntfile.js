@@ -39,9 +39,35 @@ module.exports = function(grunt) {
                 ],
                 dest: 'release/0.5/faid-0.5.php'
             }
+        },
+        phpunit: {
+            api: {
+                dir: 'tests/configure/'
+            },
+            controller: {
+                dir: 'tests/Controller/'
+            },
+            dispatcher: {
+                dir: 'tests/Dispatcher/'
+            },
+            staticobservable: {
+                dir: 'tests/StaticObservable/'
+            },
+            view: {
+                dir: 'tests/View/'
+            },
+
+
+            options: {
+                bin : '/Users/gisma/.composer/vendor/bin/phpunit',
+                bootstrap: 'tests/loader.php',
+                colors: true
+            }
         }
 
     });
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-phpunit');
+
     grunt.registerTask('default', ['concat']);
 };
