@@ -56,8 +56,15 @@ module.exports = function(grunt) {
             view: {
                 dir: 'tests/View/'
             },
-
-
+            configure : {
+                dir : 'tests/configure/'
+            },
+            cache : {
+                dir : 'tests/Cache/'
+            },
+            validators : {
+                dir : 'tests/Validators/'
+            },
             options: {
                 bin : '/Users/gisma/.composer/vendor/bin/phpunit',
                 bootstrap: 'tests/loader.php',
