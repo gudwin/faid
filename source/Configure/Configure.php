@@ -16,8 +16,7 @@ namespace Faid\Configure {
 	 * });
 	 * </code>
 	 */
-	class Configure extends StaticObservable
-	{
+	class Configure extends StaticObservable {
 		/**
 		 * Map of all data
 		 * @var array
@@ -26,20 +25,21 @@ namespace Faid\Configure {
 
 		/**
 		 * Return data by given $key
+		 *
 		 * @param $key
+		 *
 		 * @return array
 		 * @throws ConfigureException
 		 */
-		public static function read( $key )
-		{
+		public static function read( $key ) {
 			// split keys
 			$keys = self::explode( $key );
 			// read value
 			$data = self::$data;
 
 			foreach ( $keys as $part ) {
-				if (array_key_exists( $part, $data )) {
-					$data = $data[$part];
+				if ( isset( $data[ $part ] ) ) {
+					$data = $data[ $part ];
 				} else {
 
 					throw new ConfigureException( $key );
@@ -50,21 +50,22 @@ namespace Faid\Configure {
 
 		/**
 		 * Writes key to database
+		 *
 		 * @param $key
 		 * @param $newData array
+		 *
 		 * @throws ConfigureException
 		 */
-		public static function write( $key, $newData )
-		{
+		public static function write( $key, $newData ) {
 			// split keys
 			$keys = self::explode( $key );
 			// write values
 			$data = & self::$data;
 			foreach ( $keys as $part ) {
-				if (!isset( $data[$part] )) {
-					$data[$part] = array();
+				if ( !isset( $data[ $part ] ) ) {
+					$data[ $part ] = array();
 				}
-				$data = & $data[$part];
+				$data = & $data[ $part ];
 			}
 			$data = $newData;
 			self::callEvent( 'Configure.write', $key, $newData );
@@ -72,11 +73,12 @@ namespace Faid\Configure {
 
 		/**
 		 * Explodes given string to array that contains path to data
+		 *
 		 * @param $key
+		 *
 		 * @return array
 		 */
-		private static function explode( $key )
-		{
+		private static function explode( $key ) {
 			return explode( '.', $key );
 		}
 	}
