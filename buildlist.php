@@ -13,6 +13,9 @@ function returnBuildList() {
 		'UParser.php',
 		'Model.php',
 		'Exception.php',
+		'Validator.php',
+		'Validators/Exception.php',
+		'Validators/FileInSecuredFolder.php',
         'View/View.php',
         'View/Exception.php',
         'Controller/Controller.php',
@@ -30,6 +33,11 @@ function returnBuildList() {
 		'Request/Validator/Email.php',
 		'Request/Validator/Integer.php',
 		'Request/Validator/Url.php',
+		'SimpleCache.php',
+		'Cache/Exception.php',
+		'Cache/Engine/CacheEngineInterface.php',
+		'Cache/Engine/FileCache.php',
+		'Cache/Engine/Memcache.php'
 	);
 	return $buildList;
 }
