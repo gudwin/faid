@@ -22,13 +22,7 @@ namespace Faid\Cache\Engine {
 			}
 		}
 
-		protected function autoloadConfig() {
-			$this->config = \Faid\Configure\Configure::read( self::ConfigurePath );
-			$valid        = isset( $this->config[ 'servers' ] ) && is_array( $this->config[ 'servers' ] );
-			if ( !$valid ) {
-				throw new Exception( 'Memcache config not valid' );
-			}
-		}
+
 
 		public function get( $key ) {
 			$flags = null;
@@ -58,6 +52,16 @@ namespace Faid\Cache\Engine {
 				return false;
 			}
 			return true;
+		}
+		public function getInstance() {
+			return $this->instance;
+		}
+		protected function autoloadConfig() {
+			$this->config = \Faid\Configure\Configure::read( self::ConfigurePath );
+			$valid        = isset( $this->config[ 'servers' ] ) && is_array( $this->config[ 'servers' ] );
+			if ( !$valid ) {
+				throw new Exception( 'Memcache config not valid' );
+			}
 		}
 	}
 }
