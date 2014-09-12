@@ -65,3 +65,4 @@ namespace Faid\Cache\Engine {
 		}
 	}
 }
+?>

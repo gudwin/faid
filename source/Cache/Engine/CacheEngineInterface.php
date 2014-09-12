@@ -11,3 +11,4 @@ namespace Faid\Cache\Engine {
 		public function isActual( $key );
 	}
 }
+?>

@@ -8,3 +8,5 @@ namespace Faid {
 		abstract protected function test();
 	}
 }
+
+?>
