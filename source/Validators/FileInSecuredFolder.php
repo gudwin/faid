@@ -3,7 +3,7 @@
 namespace Faid\Validators {
 
 
-	class FileInSecuredFolder extends \Faid\Validator {
+	class FileInSecuredFolder  {
 		protected $baseFolder = null;
 
 		public function __construct( $baseFolder ) {
