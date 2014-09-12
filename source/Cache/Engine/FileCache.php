@@ -52,6 +52,9 @@ namespace Faid\Cache\Engine {
 				return $this->lastLoadedData;
 			}
 			$this->loadData( $path );
+			if ( !$this->testIfCurrentCacheActual()) {
+				throw new Exception('Cache "'.$key.'" not actual');
+			}
 //			Trace::addMessage( 'SimpleCache', 'Cache `' . $key . '` loaded' );
 			return $this->lastLoadedData[ 'data' ];
 		}
@@ -120,13 +123,15 @@ namespace Faid\Cache\Engine {
 			} catch (Exception $e ) {
 				return false;
 			}
+			return $this->testIfCurrentCacheActual();
 
+		}
+		protected function testIfCurrentCacheActual() {
 			if ( time() >= $this->lastLoadedData[ 'expire' ] ) {
 				return false;
 			}
 			return true;
 		}
-
 		protected function getPath( $key ) {
 			$path = $this->basePath . $key;
 

@@ -167,4 +167,16 @@ class FileCacheTest extends \Faid\tests\baseTest {
 		$instance->set( $key, 'test', $time );
 		$this->assertTrue( $instance->isActual( $key ) );
 	}
+
+	/**
+	 * @expectedException Exception
+	 */
+	public function testGetNotActualCache() {
+		$key      = 'test';
+		$time     = 1;
+		$instance = new FileCache();
+		$instance->set( $key, 'test', $time );
+		sleep( $time  );
+		$instance->get( $key );
+	}
 }
