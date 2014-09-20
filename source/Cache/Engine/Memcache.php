@@ -15,7 +15,7 @@ namespace Faid\Cache\Engine {
 			$this->autoloadConfig();
 			$this->instance = new PeclMemcache();
 			foreach ( $this->config[ 'servers' ] as $row ) {
-				$result = $this->instance->pconnect( $row[ 'host' ], !empty( $row[ 'port' ] ) ? $row[ 'port' ] : null );
+				$result = $this->instance->addserver( $row[ 'host' ], !empty( $row[ 'port' ] ) ? $row[ 'port' ] : null );
 				if ( !$result ) {
 					throw new Exception( 'Failed to connect to server:' . print_r( $row, true ) );
 				}
