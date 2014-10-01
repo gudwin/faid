@@ -70,6 +70,9 @@ module.exports = function(grunt) {
             cache : {
                 dir : 'tests/Cache/'
             },
+            response : {
+                dir : 'tests/Response/'
+            },
             validators : {
                 dir : 'tests/Validators/'
             },

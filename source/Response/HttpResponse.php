@@ -1,11 +1,9 @@
 <?php
-/**
- * @package faid.Response
- */
 namespace Faid\Response {
 	use \Faid\Response as baseResponse;
 	class HttpResponse extends Response {
 		protected $content = '';
+		protected $mimeType = '';
 		/**
 		 * Sets data to display
 		 * @param $html
@@ -14,16 +12,21 @@ namespace Faid\Response {
 			$this->content = $html;
 			parent::setData( $html );
 		}
-
+		public function setMimeType( $type ) {
+			$this->mimeType = $type;
+		}
+		public function getMimeType() {
+			return $this->mimeType;
+		}
 		/**
 		 * Sends file
 		 * @param $fileName
 		 * @param $mimeType
 		 * @param $content
 		 */
-		public function sendFile( $fileName, $mimeType ) {
+		public function sendFile( $fileName, $mimeType = null ) {
 			// We'll be outputting a PDF
-			header('Content-type: '.$mimeType);
+			$this->sendContentTypeHeader( $mimeType );
 			// It will be called downloaded.pdf
 			header('Content-Disposition: attachment; filename="'.$fileName.'"');
 			header("Content-Transfer-Encoding: binary");
@@ -50,7 +53,21 @@ namespace Faid\Response {
 			if ( ob_get_level() ) {
 				ob_clean();
 			}
+			$this->sendHeaders();
 			print $this->content;
+		}
+		protected function sendHeaders() {
+			if ( !headers_sent( )) {
+				if ( !empty( $this->mimeType )) {
+					$this->sendContentTypeHeader( $this->mimeType );
+				}
+			}
+		}
+		protected function sendContentTypeHeader( $mimeType = null ) {
+			if ( empty( $mimeType )) {
+				$mimeType = $this->mimeType;
+			}
+			header('Content-type: '.$mimeType);
 		}
 	}
 }
