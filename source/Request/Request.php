@@ -35,7 +35,16 @@ namespace Faid\Request {
 		public function url( ) {
 
 		}
+		public function domain( $domainName = null ) {
 
+		}
+		/**
+		 * @param bool $uri
+		 *
+		 * @return bool
+		 */
+		public function uri( $uri = null) {
+		}
 		public function addValidator($fieldName, $validationMethod) {
 
 		}

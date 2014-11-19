@@ -13,6 +13,7 @@ namespace Faid\Cache\Engine {
 
 		public function __construct() {
 			$this->autoloadConfig();
+
 			$this->instance = new PeclMemcache();
 			foreach ( $this->config[ 'servers' ] as $row ) {
 				$result = $this->instance->addserver( $row[ 'host' ], !empty( $row[ 'port' ] ) ? $row[ 'port' ] : null );

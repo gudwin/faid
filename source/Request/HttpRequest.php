@@ -50,7 +50,7 @@ namespace Faid\Request {
 		 *
 		 * @return bool
 		 */
-		public function uri( $uri = false) {
+		public function uri( $uri = null) {
 			if ( !empty( $uri )) {
 				$this->uri = $uri;
 			}

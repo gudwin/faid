@@ -34,6 +34,7 @@ module.exports = function(grunt) {
                     'source/Dispatcher/RouteException.php',
                     'source/Request/Request.php',
                     'source/Request/HttpRequest.php',
+                    'source/Request/CommandLineRequest.php',
                     'source/Request/ValidationException.php',
                     'source/Request/Validator/Validator.php',
                     'source/Request/Validator/Email.php',
@@ -75,6 +76,9 @@ module.exports = function(grunt) {
             },
             validators : {
                 dir : 'tests/Validators/'
+            },
+            requests : {
+                dir : 'tests/Request'
             },
             options: {
                 bin : '/Users/gisma/.composer/vendor/bin/phpunit',

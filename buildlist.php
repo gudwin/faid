@@ -28,6 +28,7 @@ function returnBuildList() {
 		'Dispatcher/RouteException.php',
 		'Request/Request.php',
 		'Request/HttpRequest.php',
+		'Request/CommandLineRequest.php',
 		'Request/ValidationException.php',
 		'Request/Validator/Validator.php',
 		'Request/Validator/Email.php',
