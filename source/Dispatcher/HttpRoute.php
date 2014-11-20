@@ -35,9 +35,6 @@ namespace Faid\Dispatcher {
 		 */
 		public function test($request) {
 			parent::test($request);
-			if ( !$this->request instanceof HttpRequest ) {
-				throw new RouteException('Request object must be instance of \\Faid\\Request\\HttpRequest');
-			}
 			//
 			$regExp = $this->getRegexp();
 			//
