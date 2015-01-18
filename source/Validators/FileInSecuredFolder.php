@@ -3,8 +3,9 @@
 namespace Faid\Validators {
 
 
-	class FileInSecuredFolder  {
+	class FileInSecuredFolder {
 		protected $baseFolder = null;
+		protected $offset = null;
 
 		public function __construct( $baseFolder ) {
 			$validFolder = file_exists( $baseFolder ) && is_dir( $baseFolder );
@@ -24,7 +25,17 @@ namespace Faid\Validators {
 			}
 			$basePart = substr( $path, 0, strlen( $this->baseFolder ) );
 
-			return $basePart === $this->baseFolder;
+			$valid = $basePart === $this->baseFolder;
+
+			return $valid;
+		}
+
+		public function getOffset( $path ) {
+			if ( $this->isValid( $path ) ) {
+				return substr( $path, strlen( $this->baseFolder ) );
+			} else {
+				throw new \InvalidArgumentException( 'Incorrect path' );
+			}
 		}
 
 	}

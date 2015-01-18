@@ -33,4 +33,11 @@ class FileInSecuredFolderTest extends \Faid\tests\baseTest {
 		$validator = new FileInSecuredFolder( __DIR__ . self::TmpFolder );
 		$this->assertTrue( $validator->isValid( __DIR__ . self::TmpFolder . 'testfile'));
 	}
+	public function testOffset( ) {
+		$validator = new FileInSecuredFolder( __DIR__ . self::TmpFolder );
+		$offset = 'testfile';
+		$path = __DIR__ . self::TmpFolder . $offset;
+
+		$this->assertEquals( $offset, $validator->getOffset( $path ));
+	}
 }
