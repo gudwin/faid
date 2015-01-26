@@ -49,7 +49,7 @@ namespace Faid\Dispatcher {
 			// Replace wildcard
 			$result = str_replace('*', '(.*)', $result);
 			//
-			$result = preg_replace('/:(\w+)/', '([\w-]+)', $result);
+			$result = preg_replace('/:(\w+)/', '([\w-\.]+)', $result);
 
 			//
 			return $result;
