@@ -148,5 +148,15 @@ class MemcacheTest extends \Faid\tests\baseTest {
 		Configure::write( Memcache::ConfigurePath, $configB );
 		$instance = new Memcache();
 		$this->assertEquals( $instance->get( $key ), $fixtureB );
+		$this->AssertTrue( $instance->isActual( $key ));
+		$instance->clear( $key );
+		$this->AssertFalse( $instance->isActual( $key ));
+
+		Configure::write( Memcache::ConfigurePath, $configA );
+		$instance = new Memcache();
+		$this->assertEquals( $instance->get( $key ), $fixtureA );
+		$this->AssertTrue( $instance->isActual( $key ));
+		$instance->clear( $key );
+		$this->AssertFalse( $instance->isActual( $key ));
 	}
 } 

@@ -49,6 +49,7 @@ namespace Faid\Cache\Engine {
 		}
 
 		public function isActual( $key ) {
+			$key = $this->prefix . $key;
 			$flags  = 0;
 			$result = $this->instance->get( $key, $flags );
 			// $flags stays untouched if $key was not found on the server
