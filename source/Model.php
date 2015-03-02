@@ -62,8 +62,8 @@ namespace Faid {
 		public function attr($columnName) {
 			if ( !isset($this->columns[ $columnName ]) ) {
 				// Иначе бросаем исключение
-				$szText = ('In document ("%s","%s") attribute `%s` not found');
-				$szText = sprintf($szText, static::ModelName, $this->columns[ $this->index ]->getValue(), $columnName);
+				$szText = ('In model "%s" attribute `%s` not found');
+				$szText = sprintf($szText, static::ModelName, $columnName);
 				throw new \Exception($szText);
 			}
 
