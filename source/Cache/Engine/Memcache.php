@@ -6,6 +6,7 @@ namespace Faid\Cache\Engine {
 	class Memcache implements CacheEngineInterface {
 		const ConfigurePath = 'SimpleCache.Memcache';
 		protected $config = null;
+		protected $prefix = '';
 		/**
 		 * @var PeclMemcache
 		 */
@@ -26,6 +27,7 @@ namespace Faid\Cache\Engine {
 
 
 		public function get( $key ) {
+			$key = $this->prefix . $key;
 			$flags = null;
 			$result = $this->instance->get( $key, $flags );
 			// $flags stays untouched if $key was not found on the server
@@ -37,10 +39,12 @@ namespace Faid\Cache\Engine {
 		}
 
 		public function set( $key, $value, $timeActual = null ) {
+			$key = $this->prefix . $key;
 			$this->instance->set( $key, $value, 0, $timeActual );
 		}
 
 		public function clear( $key ) {
+			$key = $this->prefix . $key;
 			$this->instance->delete( $key );
 		}
 
@@ -63,6 +67,7 @@ namespace Faid\Cache\Engine {
 			if ( !$valid ) {
 				throw new Exception( 'Memcache config not valid' );
 			}
+			$this->prefix = !empty( $this->config['prefix'] ) ? $this->config['prefix'] : '';
 		}
 	}
 }

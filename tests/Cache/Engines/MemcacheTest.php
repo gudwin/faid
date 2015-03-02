@@ -7,16 +7,20 @@ use \Faid\Cache\Exception;
 use \Faid\Configure\Configure;
 
 class MemcacheTest extends \Faid\tests\baseTest {
-	const UnknownKey = 'some_unknown_key';
-	const LongCacheLifetime= 1000;
+	const UnknownKey        = 'some_unknown_key';
+	const LongCacheLifetime = 1000;
+	protected $config = [
+		'servers' => [
+			[
+				'host' => '127.0.0.1',
+				'port' => 11211
+			]
+		]
+	];
 
 	public function setUp() {
 		Configure::write( Memcache::ConfigurePath,
-						  array(
-							'servers' => array(
-								array('host' => '127.0.0.1','port' => 11211)
-							)
-						  ) );
+						  $this->config );
 	}
 
 	/**
@@ -26,11 +30,12 @@ class MemcacheTest extends \Faid\tests\baseTest {
 		Configure::write( Memcache::ConfigurePath, null );
 		new Memcache();
 	}
+
 	/**
 	 * @expectedException \Faid\Cache\Exception
 	 */
 	public function testInvalidConfig() {
-		Configure::write( Memcache::ConfigurePath, array('my_stuff' => '') );
+		Configure::write( Memcache::ConfigurePath, array( 'my_stuff' => '' ) );
 		new Memcache();
 	}
 
@@ -73,6 +78,7 @@ class MemcacheTest extends \Faid\tests\baseTest {
 		//
 		$this->AssertEquals( $result, $fixture );
 	}
+
 
 	public function testClearWithUnknownKey() {
 		$instance = new Memcache();
@@ -117,5 +123,30 @@ class MemcacheTest extends \Faid\tests\baseTest {
 		$instance = new Memcache();
 		$instance->set( $key, 'test', $time );
 		$this->assertTrue( $instance->isActual( $key ) );
+	}
+
+	public function testPrefixesSupported() {
+		$key = 'test';
+		$fixtureA = 'Hello';
+		$fixtureB = 'World!';
+		$configA = $this->config;
+		$configA['prefix'] = 'a';
+		$configB = $this->config;
+		$configB['prefix'] = 'b';
+		//
+		Configure::write( Memcache::ConfigurePath, $configA );
+		$instance = new Memcache();
+		$instance->set( $key, $fixtureA );
+		Configure::write( Memcache::ConfigurePath, $configB );
+		$instance = new Memcache();
+		$instance->set( $key, $fixtureB );
+		//
+		Configure::write( Memcache::ConfigurePath, $configA );
+		$instance = new Memcache();
+		$this->assertEquals( $instance->get( $key ), $fixtureA );
+		//
+		Configure::write( Memcache::ConfigurePath, $configB );
+		$instance = new Memcache();
+		$this->assertEquals( $instance->get( $key ), $fixtureB );
 	}
 } 
