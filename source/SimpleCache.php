@@ -48,12 +48,6 @@ class SimpleCache {
 		return self::getInstance()->isActual( $key );
 	}
 
-	protected static function loadConfig( ) {
-		if ( empty( self::$basePath )) {
-			$config = Configure::read( self::ConfigurePath );
-			self::$basePath = $config['BaseDir'];
-		}
-	}
 }
 
 }
