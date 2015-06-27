@@ -335,5 +335,16 @@ namespace Faid\tests\Dispatcher {
             $this->assertEquals(testController::getBeforeActionCalled(), true);
             $this->assertEquals(testController::getCalled(), true);
         }
+        public function testBuildUrl() {
+            $route = new HttpRoute([
+                'url' => '/:arg1/:arg2!',
+            ]);
+            $result = $route->buildUrl([
+                'arg1' => 'hello',
+                'arg2' => 'world'
+            ]);
+            $this->assertEquals( $result, '/hello/world!');
+
+        }
     }
 }

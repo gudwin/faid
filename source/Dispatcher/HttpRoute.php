@@ -72,7 +72,17 @@ namespace Faid\Dispatcher {
 				$controller->afterAction( );
 			}
 		}
+        public function buildUrl( $data = []) {
+            krsort( $data );
+            $search = [];
+            $replacements = [];
 
+            foreach ( $data as $key=>$row ) {
+                $search[] = ':' . $key;
+                $replacements[] = $row;
+            }
+            return str_replace( $search, $replacements, $this->urlTemplate );
+        }
 		/**
 		 *
 		 */
