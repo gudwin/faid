@@ -108,11 +108,15 @@ class FileCacheTest extends \Faid\tests\baseTest {
 	public function testGet() {
 
 		$instance = new FileCache();
-		$data     = array( 1, 2, 3, 4 );
-		$instance->set( self::KeyFixture, $data, self::CacheActualTime );
+		$initialData    = array( 1, 2, 3, 4 );
+		$instance->set( self::KeyFixture, $initialData, self::CacheActualTime );
 		$instance = new FileCache();
 		$data     = $instance->get( self::KeyFixture );
-		$this->assertEquals( $data, $data );
+		$this->assertEquals( $data, $initialData );
+        // cover cached variant
+        $data     = $instance->get( self::KeyFixture );
+        $this->assertEquals( $data, $initialData );
+
 	}
 
 

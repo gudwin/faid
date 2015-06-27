@@ -49,7 +49,7 @@ namespace Faid\Cache\Engine {
 		public function get( $key ) {
 			$path = $this->getPath( $key );
 			if ( $path == $this->lastLoadedFile ) {
-				return $this->lastLoadedData;
+				return $this->lastLoadedData['data'];
 			}
 			$this->loadData( $path );
 			if ( !$this->testIfCurrentCacheActual()) {
