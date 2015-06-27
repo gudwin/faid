@@ -1,7 +1,7 @@
 <?php
 namespace Faid\tests\Dispatcher {
 	use \Faid\Request\HttpRequest;
-	class HttpRequestTest extends basicTest {
+	class HttpRequestTest extends BasicTest {
 		const FirstDomainFixture = 'test.domain';
 		const SecondDomainFixture = 'test2.domain';
 		protected $defaultDomain = '';
