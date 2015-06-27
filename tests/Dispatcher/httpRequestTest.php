@@ -29,6 +29,17 @@ namespace Faid\tests\Dispatcher {
 			$this->assertEquals( self::FirstDomainFixture, $request->domain());
 
 		}
+        public function testGetURL( ) {
+            $_SERVER['HTTP_HOST'] = self::FirstDomainFixture;
+            $request = new HttpRequest();
+
+            $this->assertEquals( sprintf('http://%s/',self::FirstDomainFixture), $request->url());
+        }
+        public function testSetUrl( ) {
+            $request = new HttpRequest();
+            $request->url( self::FirstDomainFixture );
+            $this->assertEquals( self::FirstDomainFixture, $request->url());
+        }
 
 	}
 }

@@ -2,6 +2,7 @@
 namespace Faid\Request {
 	class HttpRequest extends Request {
 		protected $uri = false;
+        protected $url = null;
 		protected $domainName = '';
 		/**
 		 * @param array $data
@@ -20,15 +21,24 @@ namespace Faid\Request {
 		/**
 		 * @return string
 		 */
-		public function url() {
-			$https = !empty( $_SERVER['HTTPS']) ? true : false;
-			$host = !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
-			$result = sprintf('http%s://%s%s',
-					$https ? 's' : '',
-					$host,
-					$this->uri( )
-			);
-			return $result;
+		public function url( $url = null ) {
+            if ( is_null( $url )) {
+                if ( is_null( $this->url)) {
+                    $https = !empty( $_SERVER['HTTPS']) ? true : false;
+                    $host = !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
+                    $result = sprintf('http%s://%s%s',
+                        $https ? 's' : '',
+                        $host,
+                        $this->uri( )
+                    );
+                    return $result;
+                }
+                return $this->url;
+            } else {
+                $this->url = $url;
+                $this->uri = null;
+            }
+
 		}
 
 		/**
@@ -53,6 +63,7 @@ namespace Faid\Request {
 		public function uri( $uri = null) {
 			if ( !empty( $uri )) {
 				$this->uri = $uri;
+                $this->url = null;
 			}
 			return $this->uri;
 		}
