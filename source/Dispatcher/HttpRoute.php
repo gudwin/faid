@@ -63,7 +63,7 @@ namespace Faid\Dispatcher {
 			parent::dispatch();
 			//
 			$callback = $this->getRouteCallback();
-			call_user_func($callback);
+			call_user_func($callback, $this->request, $this );
 			//
 			$isController = is_array( $callback ) && is_object( $callback[0]) && ( $callback[0] instanceof \Faid\Controller\Controller );
 			//
