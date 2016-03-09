@@ -1,5 +1,5 @@
 {
-  "name": "gudwin/extasy",
+  "name": "gudwin/faid",
   "description": "FAID - first aid PHP Framework",
   "require": {
     "phpunit/phpunit": "4.8.21"
