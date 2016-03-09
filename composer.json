@@ -1,0 +1,20 @@
+{
+  "name": "gudwin/extasy",
+  "description": "FAID - first aid PHP Framework",
+  "require": {
+    "phpunit/phpunit": "4.8.21"
+  },
+  "authors": [
+    {
+      "name": "Dmitry Shevchenko",
+      "email": "dmitry@dd-team.org"
+    }
+  ],
+  "minimum-stability": "stable",
+  "config": {
+    "bin-dir": "bin/"
+  },
+  "autoload": {
+    "classmap" : ["source/"]
+  }
+}

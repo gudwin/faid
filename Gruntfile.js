@@ -9,7 +9,7 @@ module.exports = function(grunt) {
                 src: [
                     'source/StaticObservable.php',
                     'source/Configure/Configure.php',
-                    'source/Configure/exception.php',
+                    'source/Configure/Exception.php',
                     'source/Debug/Debug.php',
                     'source/Debug/baseRenderer.php',
                     'source/Debug/ErrorRenderer.php',
