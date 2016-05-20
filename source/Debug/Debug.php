@@ -317,7 +317,5 @@ namespace Faid\Debug {
 
 	function null_func() {
 	}
-
-	Debug::setDefaults();
 }
 ?>
