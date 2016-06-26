@@ -46,7 +46,7 @@ namespace Faid {
 			$szOld = ob_get_contents();
 			ob_clean();
 
-			$__szPath = $baseDir . session_id();
+			$__szPath = $baseDir . uniqid();
 			file_put_contents( $__szPath, $szContent );
 			if ( !empty( $viewVariables ) ) {
 				extract( $viewVariables );
