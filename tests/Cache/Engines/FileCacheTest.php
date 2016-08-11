@@ -183,4 +183,16 @@ class FileCacheTest extends \Faid\tests\baseTest {
 		sleep( $time  );
 		$instance->get( $key );
 	}
+	public function testGetPersistentCache() {
+		$key = 'test';
+		$value = 'fixture';
+		$time = 0;
+		//
+		$instance = new FileCache();
+		$instance->set( $key, $value, $time );
+		$this->assertEquals( $value, $instance->get( $key ));
+		sleep( 1  );
+		$this->assertEquals( $value, $instance->get( $key ));
+
+	}
 }

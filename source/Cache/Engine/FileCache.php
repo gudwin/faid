@@ -29,8 +29,11 @@ namespace Faid\Cache\Engine {
 			// Создаем файл
 			$path = $this->getPath( $key );
 
+			if ( !empty($timeActual )) {
+				$timeActual = time() + $timeActual;
+			}
 			$data = array(
-				'expire' => time() + $timeActual,
+				'expire' => $timeActual,
 				'data'     => $data
 			);
 			$data = serialize( $data );
@@ -55,7 +58,6 @@ namespace Faid\Cache\Engine {
 			if ( !$this->testIfCurrentCacheActual()) {
 				throw new Exception('Cache "'.$key.'" not actual');
 			}
-//			Trace::addMessage( 'SimpleCache', 'Cache `' . $key . '` loaded' );
 			return $this->lastLoadedData[ 'data' ];
 		}
 
@@ -82,42 +84,12 @@ namespace Faid\Cache\Engine {
 			} else {
 				throw new Exception( 'Path `' . $key . '` isn`t file' );
 			}
-//			Trace::addMessage( 'SimpleCache', 'Cache `' . $key . '` cleared' );
 		}
 
-		/**
-		 * Проверяет время последнего обновления кеша
-		 *
-		 * @param string $key
-		 * @param int    $time
-		 */
-		public function cacheOlder( $key, $time ) {
-			// Если время отрицательное, то воспринимаем его как смещение от текущего момента
-			// т.е. оно равно = текущеее время - abs($time)
-			if ( $time < 0 ) {
-				$time = time() + $time;
-			}
-			$path = self::getPath( $key );
-			if ( !file_exists( $path ) ) {
-				throw new Exception( 'Uknown path="' . $path . '"' );
-			}
-			$timeModified = filemtime( $path );
-			if ( $timeModified < $time ) {
-				$message = sprintf( 'Cache `%s` older than %s', $key, date( 'Y-m-s H:i:s', $time ) );
-//				Trace::addMessage( 'SimpleCache', $message );
-				return true;
-			} else {
-				$message = sprintf( 'Cache `%s` still actual', $key );
-//				Trace::addMessage( 'SimpleCache', $message );
-				return false;
-			}
-		}
+
 
 		public function isActual( $key ) {
 			$path = $this->getPath( $key );
-			if ( $path == $this->lastLoadedFile ) {
-				return $this->lastLoadedData;
-			}
 			try {
 				$this->loadData( $path );
 			} catch (Exception $e ) {
@@ -127,9 +99,12 @@ namespace Faid\Cache\Engine {
 
 		}
 		protected function testIfCurrentCacheActual() {
-			if ( time() >= $this->lastLoadedData[ 'expire' ] ) {
-				return false;
+			if ( !empty( $this->lastLoadedData[ 'expire' ] )) {
+				if ( time() >= $this->lastLoadedData[ 'expire' ] ) {
+					return false;
+				}
 			}
+
 			return true;
 		}
 		protected function getPath( $key ) {
