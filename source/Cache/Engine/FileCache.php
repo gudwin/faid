@@ -10,7 +10,6 @@ namespace Faid\Cache\Engine {
 
 		protected $basePath = '';
 
-		protected $lastLoadedFile = '';
 		protected $lastLoadedData = array();
 
 		/**
@@ -51,9 +50,7 @@ namespace Faid\Cache\Engine {
 		 */
 		public function get( $key ) {
 			$path = $this->getPath( $key );
-			if ( $path == $this->lastLoadedFile ) {
-				return $this->lastLoadedData['data'];
-			}
+
 			$this->loadData( $path );
 			if ( !$this->testIfCurrentCacheActual()) {
 				throw new Exception('Cache "'.$key.'" not actual');
@@ -69,7 +66,6 @@ namespace Faid\Cache\Engine {
 
 			$data                 = file_get_contents( $path );
 			$this->lastLoadedData = unserialize( $data );
-			$this->lastLoadedFile = $path;
 		}
 
 		/**
