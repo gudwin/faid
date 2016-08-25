@@ -149,5 +149,26 @@ class basicViewTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertTrue($view->isRendered());
 	}
+	public function testEmptyValuesSupported() {
+		//
+		$view = new View($this->viewPath);
+		//
+		$this->assertFalse($view->isRendered());
+		//
+		$view->set('msg', null);
+		//
+		$result = $view->render();
+
+		$this->assertTrue($view->isRendered());
+
+		$expectedResult = <<<HTML
+View header
+
+
+View footer
+HTML;
+		$this->assertEquals( $expectedResult, $result );
+
+	}
 
 }

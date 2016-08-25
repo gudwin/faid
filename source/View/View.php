@@ -134,6 +134,8 @@ namespace Faid\View {
 					foreach ($key as $varName => $value) {
 						$this->set($varName, $value);
 					}
+				} else {
+					$this->viewVars[ $key ] = null;
 				}
 			} else {
 				$this->viewVars[ $key ] = $data;
