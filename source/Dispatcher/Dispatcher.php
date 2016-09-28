@@ -12,6 +12,11 @@ namespace Faid\Dispatcher {
         protected $routes = array();
 
         /**
+         * @var Route
+         */
+        protected $activeRoute = null;
+
+        /**
          * @var HttpRequest
          */
         protected $request = null;
@@ -46,21 +51,22 @@ namespace Faid\Dispatcher {
         {
             $this->routes[] = $route;
         }
-
+        public function getActiveRoute() {
+            return $this->activeRoute;
+        }
 
         /**
          * @return Route
          */
         public function run()
         {
-            $route = $this->findRoute($this->request);
+            $this->activeRoute = $this->findRoute($this->request);
             //
-            self::callEvent('Dispatcher.Route', $route);
+            self::callEvent('Dispatcher.Route', $this->activeRoute);
             //
-            $route->prepareRequest();
-
+            $this->activeRoute->prepareRequest();
             //
-            return $route;
+            return $this->activeRoute;
         }
 
         /**
