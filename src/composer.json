@@ -1,0 +1,20 @@
+{
+    "name" : "First AID PHP micro-framework",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/gudwin/faid"
+        }
+    ],
+    "authors": [
+        {
+            "name": "Dmitry Shevchenko",
+            "email": "d@dd-team.org",
+            "homepage": "https://dd-team.org",
+            "role": "Owner"
+        }
+    ],
+    "autoload": {
+        "classmap": ["src/"]    
+    }
+}
