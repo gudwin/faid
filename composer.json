@@ -15,6 +15,6 @@
     "bin-dir": "bin/"
   },
   "autoload": {
-    "classmap" : ["source/"]
+    "classmap" : ["src/"]
   }
 }

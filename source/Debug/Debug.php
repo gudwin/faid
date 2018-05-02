@@ -194,9 +194,8 @@ namespace Faid\Debug {
 		var_dump_list($aData);
 
 	}
-
-	function var_dump_list($aData) {
-		foreach ($aData as $var) {
+	function var_dump_list($data, $objectsReadable = true ) {
+		foreach ($data as $var) {
 			var_dump($var);
 		}
 	}
