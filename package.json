@@ -1,7 +1,7 @@
 {
   "author": "Gisma",
   "name": "FAID",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-cli": ">= 0.1.6",
