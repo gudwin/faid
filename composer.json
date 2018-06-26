@@ -1,9 +1,9 @@
 {
   "name": "gudwin/faid",
   "description": "FAID - first aid PHP Framework",
-  "version" : "0.5.2",
+  "version" : "0.6.0",
   "require": {
-    "phpunit/phpunit": "4.8.21"
+    "phpunit/phpunit": "^4.8.21"
   },
   "authors": [
     {
