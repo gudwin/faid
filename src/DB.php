@@ -84,7 +84,7 @@ namespace Faid {
             if (!$result) {
                 throw new \Exception('DB <span style="color:Darkred">' . self::$connection->error . '</span> Query:<br/><pre>' . $sql . '</pre>');
             }
-            $method = $bUserFetchAssoc ? MYSQL_ASSOC : MYSQL_NUM;
+            $method = $bUserFetchAssoc ? MYSQLI_ASSOC : MYSQLI_NUM;
             if (is_callable(array($result, 'fetch_all'))) {
                 $result = $result->fetch_all($method);
             } elseif (is_object($result)) {
