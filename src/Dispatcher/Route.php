@@ -118,7 +118,7 @@ namespace Faid\Dispatcher {
             }
             //
             if (!is_callable($callback)) {
-                throw new RouteException('Route failed to dispatch. Callback not callable');
+                throw new RouteException('Route failed to dispatch. Callback not callable: '. print_r($callback,true));
             }
 
             return $callback;

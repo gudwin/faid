@@ -8,7 +8,7 @@ namespace Faid\Debug {
 	class Debug {
 		///////////////////////////////////////////////////////////////////////////
 		// Public static method
-		public static function out() {
+		public static function out($value = null) {
 			displayCallerCode(1);
 			$aData = func_get_args();
 			var_dump_list($aData);
