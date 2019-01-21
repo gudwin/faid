@@ -81,7 +81,9 @@ namespace Faid\Dispatcher {
                     return $row;
                 }
             }
-            throw new RouteException('No matched route was found');
+            $error = 'Failed to find matching route for next request: %s';
+            $error = sprintf($error,print_r($this->request,true));
+            throw new RouteException($error);
         }
     }
 }
