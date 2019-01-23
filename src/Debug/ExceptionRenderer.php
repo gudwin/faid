@@ -5,7 +5,7 @@ namespace Faid\Debug {
 		/**
 		 * @param $exception
 		 */
-		public static function render( \Exception $exception ) {
+		public static function render( $exception ) {
 			$skip = !self::isDebugEnabled();
 
 			if ( $skip ) {
