@@ -60,6 +60,7 @@ namespace Faid\Debug {
 		 */
 		public static function enable() {
 			self::linkErrorHandlers();
+			self::registerShutdown();
 		}
 
 		/**
