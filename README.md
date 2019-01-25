@@ -1,16 +1,13 @@
-#faid
+---
+status: in-progress
+version: 1.0.0
+owner: d@dd-team.org
+---
+faid - First Aid Framework
 ====
 
-## Next tasks
+Table of Contents:
+------------------
 
-- [ ] introduce \Faid\simpleCache
-- [ ] introduce \Faid\CacheEngine\Memcache
-- [ ] introduce \Faid\CacheEngine\FileCache
-
-## v. 0.5.0
-Request & Response objects introduced
-
-## v. 0.4.1
-Starting version. Importing sources from private repository
-
-Faid - first aid framework. Contains list of helper classes which can be used as embedded framework in 3rd party systems
+1. [install](./docs/install.md)
+2. [changelog](./docs/changelog.md)
