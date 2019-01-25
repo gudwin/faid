@@ -64,7 +64,7 @@ namespace Faid\Cache\Engine {
         {
             $isReadable = file_exists($path) && is_readable($path);
             if (!is_readable($isReadable)) {
-                throw new Exception(sprintf('Path %s not found or not readable'));
+                throw new Exception(sprintf('Path %s not found or not readable', $path));
             }
             $validator = new \Faid\Validators\FileInSecuredFolder($this->basePath);
             if (!$validator->isValid($path)) {
