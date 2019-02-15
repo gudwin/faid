@@ -24,7 +24,8 @@ namespace Faid\Request {
 		public function url( $url = null ) {
             if ( is_null( $url )) {
                 if ( is_null( $this->url)) {
-                    $result = sprintf('://%s%s',
+                    $host = !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
+                    $result = sprintf('//%s%s',
                         $host,
                         $this->uri( )
                     );
