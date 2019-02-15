@@ -24,10 +24,7 @@ namespace Faid\Request {
 		public function url( $url = null ) {
             if ( is_null( $url )) {
                 if ( is_null( $this->url)) {
-                    $https = !empty( $_SERVER['HTTPS']) ? true : false;
-                    $host = !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost';
-                    $result = sprintf('http%s://%s%s',
-                        $https ? 's' : '',
+                    $result = sprintf('://%s%s',
                         $host,
                         $this->uri( )
                     );
