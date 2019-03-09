@@ -61,11 +61,8 @@ namespace Faid\Dispatcher {
         public function run()
         {
             $this->activeRoute = $this->findRoute($this->request);
-            //
             self::callEvent('Dispatcher.Route', $this->activeRoute);
-            //
             $this->activeRoute->prepareRequest();
-            //
             return $this->activeRoute;
         }
 

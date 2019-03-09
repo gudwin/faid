@@ -1,8 +1,13 @@
 <?php
+/**
+ *
+ * @version 1.0.0
+ */
+
 namespace Faid\Dispatcher {
     class Route
     {
-        protected $ready = false;
+        protected $isTestCalled = false;
 
         protected $action = false;
 
@@ -27,17 +32,19 @@ namespace Faid\Dispatcher {
                 'name' => null,
             );
             $config = array_merge($defaultConfig, $config);
-
             $this->action = $config['action'];
             $this->controller = $config['controller'];
             $this->request = $config['request'];
             $this->callback = $config['callback'];
             $this->name = !empty($config['name']) ? $config['name'] : uniqid('route_');
-            $this->ready = false;
+            $this->isTestCalled = false;
         }
-        public function getName() {
+
+        public function getName()
+        {
             return $this->name;
         }
+
         /**
          *
          */
@@ -83,10 +90,7 @@ namespace Faid\Dispatcher {
         public function test($request)
         {
             $this->request = $request;
-            //
             $this->ready = false;
-
-            //
             return false;
         }
 
@@ -98,40 +102,14 @@ namespace Faid\Dispatcher {
 
         }
 
-        protected function getRouteCallback()
-        {
-            if (empty($this->callback)) {
-                //
-                if (!empty($this->controller)) {
-                    if (!is_object($this->controller)) {
-                        $this->controller = new $this->controller();
-                    }
-                    if ($this->controller instanceof \Faid\Controller\Controller) {
-                        $this->controller->beforeAction($this->request);
-                    }
-                    $callback = array($this->controller, $this->action);
-                } else {
-                    $callback = $this->action;
-                }
-            } else {
-                $callback = $this->callback;
-            }
-            //
-            if (!is_callable($callback)) {
-                throw new RouteException('Route failed to dispatch. Callback not callable: '. print_r($callback,true));
-            }
-
-            return $callback;
-
-        }
-
         /**
          * @throws RouteException
          */
         public function dispatch()
         {
-            if (!$this->ready) {
-                throw new RouteException();
+            if ( !$this->isTestCalled ) {
+                $this->isTestCalled = true;
+                $this->test($this->request);
             }
         }
     }
