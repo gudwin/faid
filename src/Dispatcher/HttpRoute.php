@@ -57,7 +57,7 @@ namespace Faid\Dispatcher {
 
         protected function getRouteCallback()
         {
-            $isControllerClass = !empty($this->controller) && classx    _exists($this->controller);
+            $isControllerClass = !empty($this->controller) && class_exists($this->controller);
             $isControllerMethod = $isControllerClass && is_callable([$this->controller, $this->action]);
             $isObjectController = !empty($this->controller) && is_object($this->controller);
             $isObjectControllerWithMethod = $isObjectController && is_callable([$this->controller, $this->action]);
