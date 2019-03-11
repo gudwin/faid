@@ -57,11 +57,12 @@ namespace Faid\Dispatcher {
 
         protected function getRouteCallback()
         {
-            $isControllerClass = !empty($this->controller) && class_exists($this->controller);
+            $isControllerClass = !empty($this->controller) && classx    _exists($this->controller);
             $isControllerMethod = $isControllerClass && is_callable([$this->controller, $this->action]);
             $isObjectController = !empty($this->controller) && is_object($this->controller);
             $isObjectControllerWithMethod = $isObjectController && is_callable([$this->controller, $this->action]);
             $isFunction = !empty($this->action) && is_callable($this->action);
+            $isCallbackFunction = !empty($this->callback) && is_callable($this->callback);
 
             if ($isObjectControllerWithMethod) {
                 $callback = [$this->controller, $this->action];
@@ -69,8 +70,11 @@ namespace Faid\Dispatcher {
                 $callback = [new $this->controller(), $this->action];
             } elseif ($isFunction) {
                 $callback = $isFunction;
+            } elseif ($isCallbackFunction) {
+                $callback = $this->callback;
             }
-            if (!is_callable($callback)) {
+
+            if (empty( $callback) || !is_callable($callback)) {
                 $error = sprintf('Route failed to dispatch. Callback not callable: %s', print_r($callback, true));
                 throw new RouteException($error);
             }
