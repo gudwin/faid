@@ -6,7 +6,7 @@ namespace Faid\tests\Request;
 use \Faid\Request\CommandLineRequest;
 
 class CommandLineRequestTest extends \Faid\tests\baseTest {
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 	}
 
@@ -53,4 +53,4 @@ class CommandLineRequestTest extends \Faid\tests\baseTest {
 		$this->assertEquals( '/', $request->uri( ));
 	}
 
-} 
+}

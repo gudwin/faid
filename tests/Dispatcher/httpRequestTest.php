@@ -5,10 +5,10 @@ namespace Faid\tests\Dispatcher {
 		const FirstDomainFixture = 'test.domain';
 		const SecondDomainFixture = 'test2.domain';
 		protected $defaultDomain = '';
-		public function setUp() {
+		public function setUp(): void {
 			$this->defaultDomain = isset( $_SERVER['HTTP_HOST'] ) ? $_SERVER['HTTP_HOST'] : '';
 		}
-		protected function tearDown( ) {
+		public function tearDown(): void {
 			$_SERVER['HTTP_HOST'] = $this->defaultDomain;
 		}
 

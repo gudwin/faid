@@ -1,7 +1,10 @@
 <?php
-namespace Faid\tests {
-	class baseTest extends \PHPUnit_Framework_TestCase {
 
-	}
+namespace Faid\tests;
+
+use PHPUnit\Framework\TestCase;
+
+class baseTest extends TestCase
+{
+
 }
-?>

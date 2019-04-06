@@ -7,7 +7,6 @@ if ($_SERVER['argc'] > 0 ) {
 
 
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/baseTest.php';
 
 Configure::write('Debug', true);
 Configure::write( 'Error.Handler', function ($errno, $errstr, $errfile = '', $errline = '') {

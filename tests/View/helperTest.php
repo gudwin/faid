@@ -4,8 +4,8 @@ namespace Faid\Tests;
 use \Faid\View\View;
 use \Faid\View\Exception as ViewException;
 
-require_once __DIR__ . '/basicHelper.php';
-class helperViewTest extends \PHPUnit_Framework_TestCase {
+
+class helperViewTest extends baseTest {
 
 
 	/**
@@ -18,14 +18,14 @@ class helperViewTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 *
 	 */
-	public function setUp() {
+	public function setUp(): void {
 		$this->viewPath       = __DIR__ . DIRECTORY_SEPARATOR . 'view.tpl';
 		$this->helperViewPath = __DIR__ . DIRECTORY_SEPARATOR . 'helper.tpl';
 
 		parent::setUp();
 	}
 
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 	}
 

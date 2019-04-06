@@ -6,12 +6,9 @@ use \Faid\SimpleCache;
 use \Faid\Configure\Configure;
 use \Faid\Configure\ConfigureException;
 
-require_once __DIR__ . '/SimpleCacheCleaner.php';
-require_once __DIR__ . '/TestCacheEngine.php';
-
 class SimpleCacheTest extends \Faid\tests\baseTest {
 
-	public function setUp() {
+	public function setUp(): void {
 		Configure::write( SimpleCache::ConfigurePath,
 						  array(
 							  'Engine' => '\\Faid\\tests\\Cache\\TestCacheEngine'

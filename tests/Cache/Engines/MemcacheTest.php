@@ -18,7 +18,7 @@ class MemcacheTest extends \Faid\tests\baseTest {
 		]
 	];
 
-	public function setUp() {
+	public function setUp(): void {
 		Configure::write( Memcache::ConfigurePath,
 						  $this->config );
 	}
@@ -159,4 +159,4 @@ class MemcacheTest extends \Faid\tests\baseTest {
 		$instance->clear( $key );
 		$this->AssertFalse( $instance->isActual( $key ));
 	}
-} 
+}

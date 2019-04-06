@@ -4,7 +4,7 @@ namespace Faid\tests\Validators;
 use \Faid\Validators\FileInSecuredFolder;
 class FileInSecuredFolderTest extends \Faid\tests\baseTest {
 	const TmpFolder = '/tmp/';
-	public function setUp() {
+	public function setUp(): void {
 		parent::setUp();
 	}
 	public function teardDown() {

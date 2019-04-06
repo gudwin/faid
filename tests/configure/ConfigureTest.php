@@ -5,7 +5,7 @@ use \Faid\Configure\Configure;
 use \Faid\Configure\ConfigureException;
 
 class ConfigureTest extends \Faid\tests\baseTest {
-	public function setUp() {
+	public function setUp(): void {
 
 	}
 

@@ -3,27 +3,26 @@ namespace Faid\Tests\StaticObservable;
 
 use \Faid\Debug\Debug;
 use \Faid\StaticObservable;
+use Faid\tests\baseTest;
 
-require_once __DIR__ . '/EventMock.php';
-require_once __DIR__ . '/EventControllerMock.php';
 /**
  * Smoke tests for staticObservable
  * Class basicStaticObservableTest
  * @package Faid\Tests
  */
-class basicStaticObservableTest extends \PHPUnit_Framework_TestCase {
+class basicStaticObservableTest extends baseTest {
 
 	const eventNameFixture = 'testEvent';
 	/**
 	 *
 	 */
-	public function setUp() {
+	public function setUp(): void {
 		EventControllerMock::cleanUp();
 		EventMock::cleanUp();
 		parent::setUp();
 	}
 
-	public function tearDown() {
+	public function tearDown(): void {
 		parent::tearDown();
 	}
 
