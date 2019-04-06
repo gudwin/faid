@@ -9,8 +9,8 @@ class UParser extends StaticObservable
 {
     static protected function includeFile($path, $variables)
     {
-        if (!empty($viewVariables)) {
-            extract($viewVariables);
+        if (!empty($variables)) {
+            extract($variables);
         }
         $result = include $path;
         $content = ob_get_contents();
@@ -56,7 +56,7 @@ class UParser extends StaticObservable
      * @param array $variables
      * @return string
      */
-    static public function parsePHPCode($code, $variables = null)
+    static public function parsePHPCode($code, $variables = [])
     {
         $baseDir = Configure::read('UParser.tmp_dir');
         $path = $baseDir . uniqid();
