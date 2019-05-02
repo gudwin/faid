@@ -75,7 +75,7 @@ namespace Faid\Dispatcher {
             }
 
             if (empty( $callback) || !is_callable($callback)) {
-                $error = sprintf('Route failed to dispatch. Callback not callable: %s', print_r($callback, true));
+                $error = sprintf('Route failed to dispatch. Callback not callable: %s', print_r($callback ?? $this, true));
                 throw new RouteException($error);
             }
             // @todo To reintegrate with Extasy\Usecase
