@@ -3,6 +3,7 @@
 namespace Faid;
 
 use Faid\Configure\Configure;
+use Faid\Debug\Debug;
 use InvalidArgumentException;
 
 class UParser extends StaticObservable
@@ -12,13 +13,7 @@ class UParser extends StaticObservable
         if (!empty($variables)) {
             extract($variables);
         }
-        $result = include $path;
-        $content = ob_get_contents();
-
-        if (!empty($content)) {
-            $result = $content . $result;
-        }
-        return $result;
+        include $path;
     }
 
     static protected function getOutputBuffer()
@@ -46,7 +41,8 @@ class UParser extends StaticObservable
     static public function parsePHPFile($templateFile, $variables = [])
     {
         $oldContents = static::getOutputBuffer();
-        $result = static::includeFile($templateFile, $variables);
+        static::includeFile($templateFile, $variables);
+        $result = self::getOutputBuffer();
         static::flushOutputBufferAndOutput($oldContents);
         return $result;
     }
