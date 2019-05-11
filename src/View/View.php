@@ -31,12 +31,10 @@ namespace Faid\View {
         /**
          * @param $filePath
          */
-        public function __construct($filePath)
+        public function __construct($filePath = null)
         {
-            //
-            $filePath = $this->getFilePath($filePath);
-            //
-            $this->filePath = $filePath;
+
+            $this->filePath = $this->getFilePath($filePath);
         }
 
         public function __isset($key)
@@ -223,7 +221,7 @@ namespace Faid\View {
         /**
          * @param $path
          */
-        protected function getFilePath($path)
+        protected function getFilePath($path = null)
         {
             if (!file_exists($path) || !is_file($path)) {
                 $error = sprintf('Failed to find file - %s', $path);
@@ -238,4 +236,3 @@ namespace Faid\View {
         }
     }
 }
-?>
