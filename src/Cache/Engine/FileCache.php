@@ -10,9 +10,8 @@ namespace Faid\Cache\Engine {
 
         const ConfigurePath = 'SimpleCache.FileCache';
 
-
         protected $basePath = '';
-
+        protected $lastLoadedPath = '';
         protected $lastLoadedData = array();
 
         /**
@@ -52,7 +51,6 @@ namespace Faid\Cache\Engine {
         public function get($key)
         {
             $path = $this->getPath($key);
-
             $this->loadData($path);
             if (!$this->testIfCurrentCacheActual()) {
                 throw new Exception('Cache "' . $key . '" not actual');
@@ -62,6 +60,10 @@ namespace Faid\Cache\Engine {
 
         protected function loadData($path)
         {
+            static $lastLoadedPath = null;
+            if ($lastLoadedPath == $path) {
+                return;
+            }
             $isReadable = file_exists($path) && is_readable($path);
             if (!$isReadable) {
                 throw new Exception(sprintf('Path %s not found or not readable', $path));
@@ -71,6 +73,7 @@ namespace Faid\Cache\Engine {
                 throw new Exception('File restricted by security settings: ' . $path);
             }
             $data = file_get_contents($path);
+            $this->loadedPath = $path;
             $this->lastLoadedData = unserialize($data);
         }
 
