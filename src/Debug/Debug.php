@@ -2,7 +2,9 @@
 
 namespace Faid\Debug {
 	use \Faid\Configure\Configure;
-	/**
+    use Faid\Configure\ConfigureException;
+
+    /**
 	 * That class used for handling exceptions and error in run time
 	 */
 	class Debug {
@@ -149,9 +151,16 @@ namespace Faid\Debug {
 		 * Setups handlers for errors and exceptions
 		 */
 		protected static function linkErrorHandlers() {
-			$errorHandler     = Configure::read('Error.Handler');
-			$errorLevel       = Configure::read('Error.Level');
-			$exceptionHandler = Configure::read('Exception.Handler');
+		    try {
+                $errorHandler     = Configure::read('Error.Handler');
+                $errorLevel       = Configure::read('Error.Level');
+                $exceptionHandler = Configure::read('Exception.Handler');
+            } catch (ConfigureException $e ) {
+		        // @todo to refactor this place
+		        // die silently
+		        return ;
+            }
+
 			// enable error handler
 			set_error_handler($errorHandler, $errorLevel);
 			// enable exception handler
