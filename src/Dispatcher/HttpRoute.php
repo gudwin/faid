@@ -51,7 +51,7 @@ namespace Faid\Dispatcher {
         {
             $result = '@' . $this->urlTemplate . '@si';
             $result = str_replace('*', '(.*)', $result);
-            $result = preg_replace('/:(\w+)/', '([\w-\.]+)', $result);
+            $result = preg_replace('/\:(\w+)/', '([\w\-\.]+)', $result);
             return $result;
         }
 
