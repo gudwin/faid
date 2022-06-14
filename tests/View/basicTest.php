@@ -1,6 +1,7 @@
 <?php
 namespace Faid\Tests;
 
+use Faid\View\Exception;
 use \Faid\View\View;
 use \Faid\View\Exception as ViewException;
 
@@ -33,17 +34,19 @@ class basicViewTest extends baseTest {
 	}
 
 	/**
-	 * @expectedException \Faid\View\Exception
+	 *
 	 */
 	public function testUnknownViewFile() {
+		$this->expectException(Exception::class);
 		$view = new View($this->viewPath . '_1');
 	}
 
 
 	/**
-	 * @expectedException \Faid\View\Exception
+	 *
 	 */
 	public function testUnknownLayout() {
+		$this->expectException(Exception::class);
 		$view = new View($this->viewPath);
 		$view->setLayout('non_existent_layout_path');
 	}

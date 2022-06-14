@@ -5,6 +5,7 @@ namespace Faid\tests\SimpleCache\Engines;
 use \Faid\Cache\Engine\Memcache;
 use \Faid\Cache\Exception;
 use \Faid\Configure\Configure;
+use Faid\Configure\ConfigureException;
 
 class MemcacheTest extends \Faid\tests\baseTest {
 	const UnknownKey        = 'some_unknown_key';
@@ -24,17 +25,18 @@ class MemcacheTest extends \Faid\tests\baseTest {
 	}
 
 	/**
-	 * @expectedException \Faid\Configure\ConfigureException
 	 */
 	public function testAutoloadWithEmptyConfig() {
+		$this->expectException(ConfigureException::class);
 		Configure::write( Memcache::ConfigurePath, null );
 		new Memcache();
 	}
 
 	/**
-	 * @expectedException \Faid\Cache\Exception
+	 *
 	 */
 	public function testInvalidConfig() {
+		$this->expectException(Exception::class);
 		Configure::write( Memcache::ConfigurePath, array( 'my_stuff' => '' ) );
 		new Memcache();
 	}
@@ -44,9 +46,9 @@ class MemcacheTest extends \Faid\tests\baseTest {
 	}
 
 	/**
-	 * @expectedException \Faid\Cache\Exception
 	 */
 	public function testGetUnknown() {
+		$this->expectException(Exception::class);
 		$instance = new Memcache();
 		$instance->get( self::UnknownKey );
 	}

@@ -1,6 +1,7 @@
 <?php
 namespace Faid\tests\Validators;
 
+use Faid\Validators\Exception;
 use \Faid\Validators\FileInSecuredFolder;
 class FileInSecuredFolderTest extends \Faid\tests\baseTest {
 	const TmpFolder = '/tmp/';
@@ -12,9 +13,10 @@ class FileInSecuredFolderTest extends \Faid\tests\baseTest {
 	}
 
 	/**
-	 * @expectedException \Faid\Validators\Exception
+	 *
 	 */
 	public function testUnknownBaseFolder() {
+		$this->expectException(Exception::class);
 		new FileInSecuredFolder( 'unknown');
 	}
 	public function testNotValid() {

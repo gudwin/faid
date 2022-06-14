@@ -3,6 +3,7 @@
 
 namespace Faid\tests\Dispatcher;
 
+use Faid\Dispatcher\RouteException;
 use \Faid\Request\HttpRequest;
 use Faid\Dispatcher\HttpRoute;
 use Faid\Dispatcher\Dispatcher;
@@ -12,10 +13,11 @@ use Faid\Request\Request;
 class DispatcherTest extends BasicTest
 {
     /**
-     * @expectedException \Faid\Dispatcher\RouteException
+
      */
     public function testGetUnknownNamed()
     {
+	    $this->expectException(RouteException::class);
         $dispatcher = new Dispatcher(new Request());
         $dispatcher->getNamed('unknown');
     }
@@ -54,4 +56,4 @@ class DispatcherTest extends BasicTest
         $this->assertEquals( $route, $dispatcher->getActiveRoute());
     }
 
-} 
+}

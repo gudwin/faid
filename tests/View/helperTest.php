@@ -1,8 +1,8 @@
 <?php
 namespace Faid\Tests;
 
+use Faid\View\Exception;
 use \Faid\View\View;
-use \Faid\View\Exception as ViewException;
 
 
 class helperViewTest extends baseTest {
@@ -30,17 +30,19 @@ class helperViewTest extends baseTest {
 	}
 
 	/**
-	 * @expectedException \Faid\View\Exception
+	 *
 	 */
 	public function testUnknownHelperClass() {
+		$this->expectException(Exception::class);
 		$view = new View($this->viewPath);
 		$view->addHelper('unknownHelper', 'unknown');
 	}
 
 	/**
-	 * @expectedException \Faid\View\Exception
+	 *
 	 */
 	public function testHelperWithName() {
+		$this->expectException(Exception::class);
 		$view = new View($this->viewPath);
 		//
 		$helper = new basicHelper();
@@ -64,9 +66,10 @@ class helperViewTest extends baseTest {
 	}
 
 	/**
-	 * @expectedException \Faid\View\Exception
+	 *
 	 */
 	public function testGetUnknownHelper() {
+		$this->expectException(Exception::class);
 		$view = new View($this->viewPath);
 		$view->Unknown;
 	}

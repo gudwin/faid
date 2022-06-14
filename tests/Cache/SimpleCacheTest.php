@@ -17,9 +17,10 @@ class SimpleCacheTest extends \Faid\tests\baseTest {
 	}
 
 	/**
-	 * @expectedException \Faid\Configure\ConfigureException
+	 *
 	 */
 	public function testGetInstanceWithoutConfig() {
+		$this->expectException(ConfigureException::class);
 		Configure::write( SimpleCache::ConfigurePath, null );
 		SimpleCache::getInstance();
 	}
