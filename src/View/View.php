@@ -34,7 +34,7 @@ namespace Faid\View {
         public function __construct($filePath = null)
         {
 
-            $this->filePath = $this->getFilePath($filePath);
+            $this->viewPath = $this->getFilePath($filePath);
         }
 
         public function __isset($key)
@@ -109,7 +109,7 @@ namespace Faid\View {
          */
         public function getPath()
         {
-            return $this->filePath;
+            return $this->viewPath;
         }
 
         /**
@@ -181,7 +181,7 @@ namespace Faid\View {
             } else {
                 ob_start();
             }
-            $content = $this->renderFile($this->viewVars, $this->filePath);
+            $content = $this->renderFile($this->viewVars, $this->viewPath);
             if (!empty($this->layout)) {
                 $vars = $this->viewVars;
                 $vars['content_for_layout'] = $content;

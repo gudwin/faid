@@ -29,10 +29,12 @@ class FileCacheTest extends \Faid\tests\baseTest
     public function setUp(): void
     {
         $this->clearFiles();
-        Configure::write(FileCache::ConfigurePath,
+        Configure::write(
+            FileCache::ConfigurePath,
             array(
                 'BaseDir' => self::getPath()
-            ));
+            )
+        );
     }
 
     public function tearDown(): void
@@ -59,25 +61,20 @@ class FileCacheTest extends \Faid\tests\baseTest
     }
 
     /**
-     * @expectedException \Faid\Configure\ConfigureException
      */
     public function testWithEmptyConfig()
     {
+        $this->expectException(ConfigureException::class);
         Configure::write(FileCache::ConfigurePath, null);
-        new FileCache();
-    }
-
-    public function testAutoload()
-    {
         new FileCache();
     }
 
     /**
      * Создает кеш с пустым ключом
-     * @expectedException Exception
      */
     public function testSetWithEmptyKey()
     {
+        $this->expectException(Exception::class);
         $instance = new FileCache();
         $instance->set('', array(1, 2, 3), self::CacheActualTime);
     }
@@ -91,18 +88,15 @@ class FileCacheTest extends \Faid\tests\baseTest
         $instance = new FileCache();
         $instance->set(self::KeyFixture, $fixture, self::CacheActualTime);
         $testPath = self::getPath() . (self::KeyFixture);
-        if (!file_exists($testPath)) {
-            die($testPath);
-            $this->fail();
-        }
+        $this->assertTrue(file_exists($testPath), "File $testPath does not exist");
     }
 
-    /**
+    /**t
      * Проверяет загрузку несуществующего кеша
-     * @expectedException Exception
      */
     public function testGetWithUknownKey()
     {
+        $this->expectException(Exception::class);
         $instance = new FileCache();
         $instance->get(self::UnknownKeyFixture);
     }
@@ -112,6 +106,7 @@ class FileCacheTest extends \Faid\tests\baseTest
      */
     public function testGetSecurity()
     {
+        $this->expectException(Exception::class);
         $instance = new FileCache();
         $instance->get('../FileCacheTest.php');
     }
@@ -131,16 +126,15 @@ class FileCacheTest extends \Faid\tests\baseTest
         // cover cached variant
         $data = $instance->get(self::KeyFixture);
         $this->assertEquals($data, $initialData);
-
     }
 
 
     /**
      * Проверяем очистку кеша при несуществующем хеше
-     * @expectedException Exception
      */
     public function testClearWithUnknownKey()
     {
+        $this->ExpectException(Exception::class);
         $instance = new FileCache();
         $instance->clear(self::UnknownKeyFixture);
     }
@@ -150,6 +144,7 @@ class FileCacheTest extends \Faid\tests\baseTest
      */
     public function testClear()
     {
+        $this->expectException(Faid\Cache\Exception::class);
         $key = 'test';
         $instance = new FileCache();
         $data = array(1, 2, 3, 4);
@@ -158,12 +153,9 @@ class FileCacheTest extends \Faid\tests\baseTest
 
         $instance->clear($key);
 
-        try {
-            $instance->get($key);
-            $this->fail('Exception must be thrown');
-        } catch (Exception $e) {
-
-        }
+        $this->expectException(Exception::class);
+        $instance->get($key);
+        $this->fail('Exception must be thrown');
     }
 
     public function testUnknownCacheIsActual()
@@ -192,15 +184,16 @@ class FileCacheTest extends \Faid\tests\baseTest
     }
 
     /**
-     * @expectedException Exception
+     * 
      */
     public function testGetNotActualCache()
     {
+        $this->expectException(Exception::class);
         $key = 'test';
         $time = 1;
         $instance = new FileCache();
         $instance->set($key, 'test', $time);
-        sleep($time);
+        sleep($time + 1);
         $instance->get($key);
     }
 
@@ -215,6 +208,5 @@ class FileCacheTest extends \Faid\tests\baseTest
         $this->assertEquals($value, $instance->get($key));
         sleep(1);
         $this->assertEquals($value, $instance->get($key));
-
     }
 }

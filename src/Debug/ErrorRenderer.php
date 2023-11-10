@@ -18,7 +18,7 @@ namespace Faid\Debug {
 
 		protected static function ignoreError( $errno ) {
 			// Проверяем, возможно сейчас установлен режим игнорирования этого типа ошибки
-			$currentErrorLevel = ini_get( 'error_reporting' );
+			$currentErrorLevel = intval(ini_get( 'error_reporting' ));
 			$result            = !( $errno & $currentErrorLevel );
 			return $result;
 		}

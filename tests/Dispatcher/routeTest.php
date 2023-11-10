@@ -7,39 +7,20 @@ namespace Faid\tests\Dispatcher {
     use \Faid\Dispatcher\RouteException;
     use \Faid\tests\baseTest;
 
-    class RouteTest extends BasicTest
+    class RouteTest extends Basic
     {
         const fixtureTestUrl = '/Controller/1/view/helloWorld/2';
 
         public function testGetName()
         {
             $fixture = 'hello world!';
-            $route = new Route(['name' => $fixture]);
+            $route = new HttpRoute(['name' => $fixture, 'url' => '/some_url/']);
             $this->assertEquals($route->getName(), $fixture);
         }
 
-        /**
-         * @expectedException \Faid\Dispatcher\RouteException
-         */
-        public function testDispatchNotReadyRoute()
-        {
-            // that route correctly initialiized
-            $route = new HttpRoute(array(
-                'url' => '/Controller/test/',
-                'controller' => new testController(),
-                'action' => 'someAction'
-            ));
-            // but when dispatch will be called Exception will thrown, because route method "->test()" did not called
-            $route->dispatch();
-
-
-        }
-
-        /**
-         * @expectedException \Faid\Dispatcher\RouteException
-         */
         public function testCallBackNotFound()
         {
+            $this->expectException(\Faid\Dispatcher\RouteException::class);
             $request = new HttpRequest();
             $request->uri(self::fixtureTestUrl);
 
@@ -53,11 +34,9 @@ namespace Faid\tests\Dispatcher {
             $route->dispatch();
         }
 
-        /**
-         * @expectedException \Faid\Dispatcher\RouteException
-         */
         public function testCallBackNotFoundSecond()
         {
+            $this->expectException( \Faid\Dispatcher\RouteException::class );
             $request = new HttpRequest();
             $request->uri(self::fixtureTestUrl);
 
@@ -73,11 +52,9 @@ namespace Faid\tests\Dispatcher {
             $route->dispatch();
         }
 
-        /**
-         * @expectedException \Faid\Dispatcher\RouteException
-         */
         public function testRouteNotFound()
         {
+            $this->expectException( \Faid\Dispatcher\RouteException::class );
             $request = new HttpRequest();
             $request->uri(self::fixtureTestUrl);
             //
@@ -158,12 +135,11 @@ namespace Faid\tests\Dispatcher {
         }
 
         /**
-         * @expectedException \Faid\Dispatcher\RouteException
          * Displaying full process of dispatching routes
          */
         public function testSimpleRouteDispatch()
         {
-
+            $this->expectException( RouteException::class );
             //
             $request = new HttpRequest();
             $request->uri(self::fixtureTestUrl);
@@ -320,7 +296,7 @@ namespace Faid\tests\Dispatcher {
                 new HttpRoute(
                     array(
                         'url' => '/Controller/test',
-                        'controller' => '\\Faid\\tests\\Dispatcher\\testController',
+                        'controller' => new TestController(),
                         'action' => 'someAction'
                     )
                 )

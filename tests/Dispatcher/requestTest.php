@@ -8,7 +8,7 @@ namespace Faid\tests\Dispatcher {
 	use \Faid\Dispatcher\HttpRoute;
 	use \Faid\Dispatcher\RouteException;
 
-	class requestTest extends BasicTest{
+	class requestTest extends Basic {
 		public function testRequestObject() {
 			$request = new Request( array(
 										'phrase1' => 'Hello',

@@ -11,10 +11,8 @@ class FileInSecuredFolderTest extends \Faid\tests\baseTest {
 
 	}
 
-	/**
-	 * @expectedException \Faid\Validators\Exception
-	 */
 	public function testUnknownBaseFolder() {
+        $this->expectException(\Faid\Validators\Exception::class);
 		new FileInSecuredFolder( 'unknown');
 	}
 	public function testNotValid() {

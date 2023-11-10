@@ -5,7 +5,7 @@
  */
 
 namespace Faid\Dispatcher {
-    class Route
+    abstract class Route
     {
         protected $isTestCalled = false;
 
@@ -87,10 +87,9 @@ namespace Faid\Dispatcher {
          *
          * @return bool
          */
-        public function test($request)
+        public function test(\Faid\Request\Request $request): bool
         {
             $this->request = $request;
-            $this->ready = false;
             return false;
         }
 
@@ -105,13 +104,7 @@ namespace Faid\Dispatcher {
         /**
          * @throws RouteException
          */
-        public function dispatch()
-        {
-            if ( !$this->isTestCalled ) {
-                $this->isTestCalled = true;
-                $this->test($this->request);
-            }
-        }
+        abstract public function dispatch();
     }
 }
 ?>

@@ -1,43 +1,50 @@
 <?php
+
 namespace Faid\tests\Dispatcher;
 
-use \Faid\Controller\Controller;
+use \Faid\Controller\Controller as Controller;
 
-class testController extends Controller {
-	static protected $called = false;
+class TestController extends Controller
+{
+    protected static $called = false;
 
-	static protected $beforeActionCalled = false;
+    protected static $beforeActionCalled = false;
 
-	public function __construct() {
-		self::$called             = false;
-		self::$beforeActionCalled = false;
-	}
+    public function __construct()
+    {
+        self::$called             = false;
+        self::$beforeActionCalled = false;
+    }
 
-	/**
-	 * @param $request
-	 */
-	public function beforeAction($request) {
-		self::$beforeActionCalled = true;
-	}
+    /**
+     * @param $request
+     */
+    public function beforeAction($request)
+    {
+        self::$beforeActionCalled = true;
+    }
 
-	/**
-	 * @return bool
-	 */
-	public static function getBeforeActionCalled() {
-		return self::$beforeActionCalled;
-	}
+    /**
+     * @return bool
+     */
+    public static function getBeforeActionCalled()
+    {
+        return self::$beforeActionCalled;
+    }
 
-	/**
-	 * @return bool
-z	 */
-	public static function getCalled() {
-		return self::$called;
-	}
+    /**
+     * @return bool
+     */
+    public static function getCalled()
+    {
+        return self::$called;
+    }
 
-	/**
-	 * Test action method
-	 */
-	public function someAction() {
-		self::$called = true;
-	}
+    /**
+     * Test action method
+     */
+    public function someAction()
+    {
+        self::$called = true;
+    }
 }

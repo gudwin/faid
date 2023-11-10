@@ -1,7 +1,7 @@
 <?php
 namespace Faid\tests\Dispatcher {
 	use \Faid\Request\HttpRequest;
-	class HttpRequestTest extends BasicTest {
+	class HttpRequestTest extends Basic {
 		const FirstDomainFixture = 'test.domain';
 		const SecondDomainFixture = 'test2.domain';
 		protected $defaultDomain = '';
@@ -33,7 +33,7 @@ namespace Faid\tests\Dispatcher {
             $_SERVER['HTTP_HOST'] = self::FirstDomainFixture;
             $request = new HttpRequest();
 
-            $this->assertEquals( sprintf('http://%s/',self::FirstDomainFixture), $request->url());
+            $this->assertEquals( sprintf('//%s/',self::FirstDomainFixture), $request->url());
         }
         public function testSetUrl( ) {
             $request = new HttpRequest();

@@ -4,7 +4,7 @@ namespace Faid\tests;
 
 use PHPUnit\Framework\TestCase;
 
-class baseTest extends TestCase
+abstract class baseTest extends TestCase
 {
 
 }

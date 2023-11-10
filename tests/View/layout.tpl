@@ -13,7 +13,7 @@ print $content_for_layout;
 
 View variables available also in view:
 
-<?
+<?php
 print $msg;
 ?>
 Layout footer

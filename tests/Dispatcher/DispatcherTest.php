@@ -7,23 +7,26 @@ use \Faid\Request\HttpRequest;
 use Faid\Dispatcher\HttpRoute;
 use Faid\Dispatcher\Dispatcher;
 use Faid\Dispatcher\Route;
+use Faid\Dispatcher\RouteException;
 use Faid\Request\Request;
 
-class DispatcherTest extends BasicTest
+class DispatcherTest extends Basic
 {
     /**
-     * @expectedException \Faid\Dispatcher\RouteException
+     * 
      */
     public function testGetUnknownNamed()
     {
+        $this->expectException(RouteException::class);
         $dispatcher = new Dispatcher(new Request());
         $dispatcher->getNamed('unknown');
     }
 
     public function testGetNamed()
     {
-        $route = new Route([
-            'name' => 'hello'
+        $route = new HttpRoute([
+            'name' => 'hello',
+            'url' => '/some_url/' 
         ]);
         $dispatcher = new Dispatcher(new Request());
         $dispatcher->addRoute($route);

@@ -1,4 +1,4 @@
-<?
+<?php
 namespace Faid\tests;
 
 use \Faid\Configure\Configure;
@@ -10,9 +10,10 @@ class ConfigureTest extends \Faid\tests\baseTest {
 	}
 
 	/**
-	 * @expectedException \Faid\Configure\ConfigureException
+	 * 
 	 */
 	public function testGetUnknown() {
+        $this->expectException(ConfigureException::class);
 		Configure::read( 'xxxx' );
 	}
 

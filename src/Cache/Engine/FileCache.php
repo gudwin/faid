@@ -25,7 +25,7 @@ namespace Faid\Cache\Engine {
             // Проверяем ключ на пустоту
 
             if (empty($key) or preg_match('#..\/.\/#', $key)) {
-                throw new Exception('Invalid cache name');
+                throw new Exception('Invalid cache name: '. $key);
             }
 
             // Создаем файл
@@ -60,10 +60,6 @@ namespace Faid\Cache\Engine {
 
         protected function loadData($path)
         {
-            static $lastLoadedPath = null;
-            if ($lastLoadedPath == $path) {
-                return;
-            }
             $isReadable = file_exists($path) && is_readable($path);
             if (!$isReadable) {
                 throw new Exception(sprintf('Path %s not found or not readable', $path));
@@ -73,7 +69,7 @@ namespace Faid\Cache\Engine {
                 throw new Exception('File restricted by security settings: ' . $path);
             }
             $data = file_get_contents($path);
-            $this->loadedPath = $path;
+            $this->lastLoadedPath = $path;
             $this->lastLoadedData = unserialize($data);
         }
 

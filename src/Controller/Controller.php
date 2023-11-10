@@ -56,7 +56,9 @@ namespace Faid\Controller {
 		}
 
 		/**
-		 * Called by dispatcher after action method was called
+         * Ensurses that the response is created. 
+         * Ensures that the response is sent.
+        
 		 */
 		public function afterAction()
 		{
@@ -73,7 +75,7 @@ namespace Faid\Controller {
 				} else {
 				}
 			}
-			//
+			// Forcefully send response 
 			if (!$this->response->isSent()) {
 				//
 				$this->response->send();
@@ -94,7 +96,11 @@ namespace Faid\Controller {
 					$this->getDefaultHTTPResponse();
 					//
 					$this->response->setData( $this->view->render());
-				}
+				} else {
+                    // @todo probably to fix this behavior 
+                    // so it the this->view is empty we actually do nothing and return a null 
+                    // not sure if it a real problem now 
+                }
 			}
 			if ( !empty( $this->response )) {
 				$this->response->send( );
@@ -105,7 +111,7 @@ namespace Faid\Controller {
 			if ( !empty( $this->view )) {
 				$this->view->set( $key, $value );
 			} else {
-				throw new Exception('View not defined');
+				throw new Exception('View not defined / the $view is empty');
 			}
 		}
 
@@ -114,7 +120,6 @@ namespace Faid\Controller {
 		 */
 		protected function getDefaultHTTPResponse( ) {
 			if ( !empty( $this->response )) {
-				//
 				$this->response = new HttpResponse();
 			}
 			return $this->response;

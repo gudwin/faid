@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version: 1.0.1
  */
@@ -40,7 +41,7 @@ namespace Faid\Dispatcher {
          *
          * @return bool
          */
-        public function test($request)
+        public function test(\Faid\Request\Request $request): bool
         {
             parent::test($request);
             $regExp = $this->getRegexp();
@@ -57,8 +58,7 @@ namespace Faid\Dispatcher {
 
         protected function getRouteCallback()
         {
-            $isControllerClass = !empty($this->controller) && class_exists($this->controller);
-            $isControllerMethod = $isControllerClass && is_callable([$this->controller, $this->action]);
+
             $isObjectController = !empty($this->controller) && is_object($this->controller);
             $isObjectControllerWithMethod = $isObjectController && is_callable([$this->controller, $this->action]);
             $isFunction = !empty($this->action) && is_callable($this->action);
@@ -66,24 +66,17 @@ namespace Faid\Dispatcher {
 
             if ($isObjectControllerWithMethod) {
                 $callback = [$this->controller, $this->action];
-            } elseif ($isControllerMethod) {
-                $callback = [new $this->controller(), $this->action];
             } elseif ($isFunction) {
                 $callback = $isFunction;
             } elseif ($isCallbackFunction) {
                 $callback = $this->callback;
             }
 
-            if (empty( $callback) || !is_callable($callback)) {
+            if (empty($callback) || !is_callable($callback)) {
                 $error = sprintf('Route failed to dispatch. Callback not callable: %s', print_r($callback ?? $this, true));
                 throw new RouteException($error);
             }
-            // @todo To reintegrate with Extasy\Usecase
-            // if ($this->controller instanceof \Faid\Controller\Controller) {
-            //    $this->controller->beforeAction($this->request);
-            // }
             return $callback;
-
         }
 
         /**
@@ -92,15 +85,19 @@ namespace Faid\Dispatcher {
          */
         public function dispatch()
         {
-            parent::dispatch();
             $callback = $this->getRouteCallback();
+
+            $isHasBeforeAction = is_array($callback) && is_object($callback[0]) && is_callable([$callback[0], 'beforeAction']);
+            if ($isHasBeforeAction) {
+                $callback[0]->beforeAction( $this->request );
+            }
+
             call_user_func($callback, $this->request, $this);
-            // @todo To reintegrate that code
-//			$isController = is_array( $callback ) && is_object( $callback[0]) && ( $callback[0] instanceof \Faid\Controller\Controller );
-//			if ( $isController ) {
-//				$controller = $callback[0];
-//				$controller->afterAction( );
-//			}
+
+            $isHasAfterAction = is_array($callback) && is_object($callback[0]) && is_callable([$callback[0], 'afterAction']);
+            if ($isHasAfterAction) {
+                $callback[0]->afterAction( $this->request );
+            }
         }
 
         public function buildUrl($data = [])
@@ -150,8 +147,6 @@ namespace Faid\Dispatcher {
                 }
                 $this->request->set($params);
             }
-
         }
     }
 }
-?>
