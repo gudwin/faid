@@ -11,3 +11,4 @@ Table of Contents:
 
 1. [install](./docs/install.md)
 2. [changelog](./docs/changelog.md)
+3. to execute test run `phpunit.sh`
