@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="WordPress" namespace="WordPressCS\WordPress">
+
+	<description>FAID Coding Standard</description>
+    <rule ref="PSR12"></rule>
+</ruleset>
