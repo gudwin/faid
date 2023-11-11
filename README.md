@@ -6,6 +6,8 @@ owner: d@dd-team.org
 faid - First Aid Framework
 ====
 
+Most part of this framework is a set of outdated libraries and has to be cleaned.
+
 Table of Contents:
 ------------------
 
