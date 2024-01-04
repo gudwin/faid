@@ -111,6 +111,9 @@ namespace Faid {
 							? '(' . $row . ')'
 							: $row;
 					} else {
+                        if (is_null($row)) {
+                            $row = '';
+                        }
 						$sqlCond[ ] = sprintf(
 							'`%s` = "%s"',
 							DB::$connection->real_escape_string($key),
